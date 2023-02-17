@@ -17,7 +17,26 @@ const getAllFilm = (req, res) => {
 }
 
 const getFilmById = (req, res) => {
-
+    let filmId = req.params.filmId;
+    if (!Mongoose.Types.ObjectId.isValid(filmId)) {
+        res.status(400).json({
+            message: "id is invalid!",
+        })
+    }
+    else {
+        filmModel.findById(filmId, (error, data) => {
+            if (error) {
+                res.status(500).json({
+                    message: `Internal server error: ${error.message}`,
+                });
+            }
+            else {
+                res.status(200).json({
+                    data
+                });
+            }
+        })
+    }
 }
 
 const createFilm = (req, res) => {
@@ -32,9 +51,9 @@ const createFilm = (req, res) => {
             message: "year is require!",
         })
     }
-    else if (!body.actor) {
+    else if (!body.director) {
         res.status(400).json({
-            message: "actor is require!",
+            message: "director is require!",
         })
     }
     else if (!body.nation) {
@@ -47,7 +66,7 @@ const createFilm = (req, res) => {
             _id: Mongoose.Types.ObjectId(),
             name: body.name,
             year: body.year,
-            actor: body.actor,
+            director: body.director,
             nation: body.nation
         }
         filmModel.create(film, (error, data) => {
@@ -66,11 +85,77 @@ const createFilm = (req, res) => {
 }
 
 const updateFilmById = (req, res) => {
+    let filmId = req.params.filmId;
+    let body = req.body;
 
+    if (!Mongoose.Types.ObjectId.isValid(filmId)) {
+        res.status(400).json({
+            message: "id is invalid!",
+        })
+    }
+    else if (!body.name) {
+        res.status(400).json({
+            message: "name is require!",
+        })
+    }
+    else if (!body.year) {
+        res.status(400).json({
+            message: "year is require!",
+        })
+    }
+    else if (!body.director) {
+        res.status(400).json({
+            message: "director is require!",
+        })
+    }
+    else if (!body.nation) {
+        res.status(400).json({
+            message: "nation is require!",
+        })
+    }
+    else {
+        let film = {
+            name: body.name,
+            year: body.year,
+            director: body.director,
+            nation: body.nation
+        };
+        filmModel.findByIdAndUpdate(filmId, film, (error, data) => {
+            if (error) {
+                res.status(500).json({
+                    message: `Internal server error: ${error.message}`,
+                });
+            }
+            else {
+                res.status(200).json({
+                    data
+                });
+            }
+        })
+    }
 }
 
 const deleteFilmById = (req, res) => {
-
+    let filmId = req.params.filmId;
+    if (!Mongoose.Types.ObjectId.isValid(filmId)) {
+        res.status(400).json({
+            message: "id is invalid!",
+        })
+    }
+    else {
+        filmModel.findByIdAndDelete(filmId, (error, data) => {
+            if (error) {
+                res.status(500).json({
+                    message: `Internal server error: ${error.message}`,
+                });
+            }
+            else {
+                res.status(204).json({
+                    data
+                });
+            }
+        })
+    }
 }
 
 module.exports = { getAllFilm, getFilmById, createFilm, updateFilmById, deleteFilmById };

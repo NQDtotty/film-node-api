@@ -9,7 +9,7 @@ const filmSchema = new Mongoose.Schema({
         type: String,
         require: true
     },
-    actor: {
+    director: {
         type: String,
         require: true
     },
