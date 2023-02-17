@@ -1,37 +1,22 @@
-const express = require('express');
-const app = express();
+const Mongoose = require('mongoose');
+Mongoose.connect("mongodb://localhost:27017/REST_API_FILM", function (error) {
+    if (error) throw error;
+    console.log("Successfully connect to database");
+})
+
+const filmRouter = require('./app/routers/filmRouter');
+
+const Express = require('express');
+const app = Express();
+
+app.use(Express.json());
+app.use(Express.urlencoded({
+    urlencoded: true,
+}));
+app.use('/', filmRouter);
+
 const port = 8000;
 
-app.get('/', (req, res) => {
-    res.status(200).json({
-        message: "Hello world"
-    })
-})
-
-app.get('/get-method', (req, res) => {
-    res.status(200).json({
-        info: "GET method",
-    });
-})
-
-app.post('/post-method', (req, res) => {
-    res.status(200).json({
-        info: "POST method",
-    });
-})
-
-app.put('/put-method', (req, res) => {
-    res.status(200).json({
-        info: "PUT method",
-    });
-})
-
-app.delete('/delete-method', (req, res) => {
-    res.status(200).json({
-        info: "DELETE method",
-    });
-})
-
 app.listen(port, () => {
-    console.log(`App listening on port ${port}`);
+    console.log(`Server starting on port ${port}`);
 })
