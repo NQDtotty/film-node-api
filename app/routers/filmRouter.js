@@ -1,6 +1,6 @@
-const Express = require('express');
+const express = require('express');
 const filmMiddleware = require('../middlewares/filmMiddleware');
-const filmRouter = Express.Router();
+const filmRouter = express.Router();
 
 filmRouter.use(filmMiddleware);
 
@@ -8,12 +8,12 @@ const { getAllFilm, getFilmById, createFilm, updateFilmById, deleteFilmById } = 
 
 filmRouter.get("/films", getAllFilm);
 
-filmRouter.get("/film/:filmId", getFilmById);
+filmRouter.get("/films/:filmId", getFilmById);
 
-filmRouter.put("/film/:filmId", updateFilmById);
+filmRouter.put("/films/:filmId", updateFilmById);
 
-filmRouter.post("/film", createFilm);
+filmRouter.post("/films", createFilm);
 
-filmRouter.delete("/film/:filmId", deleteFilmById);
+filmRouter.delete("/films/:filmId", deleteFilmById);
 
 module.exports = filmRouter;

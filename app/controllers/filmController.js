@@ -1,11 +1,11 @@
-const Mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const filmModel = require('../models/filmModel');
 
 const getAllFilm = (req, res) => {
     filmModel.find((error, data) => {
         if (error) {
             res.status(500).json({
-                message: `Internal server error: ${error.message}`,
+                message: `Server error: ${error.message}`,
             });
         }
         else {
@@ -18,7 +18,7 @@ const getAllFilm = (req, res) => {
 
 const getFilmById = (req, res) => {
     let filmId = req.params.filmId;
-    if (!Mongoose.Types.ObjectId.isValid(filmId)) {
+    if (!mongoose.Types.ObjectId.isValid(filmId)) {
         res.status(400).json({
             message: "id is invalid!",
         })
@@ -63,7 +63,7 @@ const createFilm = (req, res) => {
     }
     else {
         let film = {
-            _id: Mongoose.Types.ObjectId(),
+            _id: mongoose.Types.ObjectId(),
             name: body.name,
             year: body.year,
             director: body.director,
@@ -88,7 +88,7 @@ const updateFilmById = (req, res) => {
     let filmId = req.params.filmId;
     let body = req.body;
 
-    if (!Mongoose.Types.ObjectId.isValid(filmId)) {
+    if (!mongoose.Types.ObjectId.isValid(filmId)) {
         res.status(400).json({
             message: "id is invalid!",
         })
@@ -137,7 +137,7 @@ const updateFilmById = (req, res) => {
 
 const deleteFilmById = (req, res) => {
     let filmId = req.params.filmId;
-    if (!Mongoose.Types.ObjectId.isValid(filmId)) {
+    if (!mongoose.Types.ObjectId.isValid(filmId)) {
         res.status(400).json({
             message: "id is invalid!",
         })
