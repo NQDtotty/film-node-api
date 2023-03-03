@@ -1,6 +1,6 @@
 # film-node-api
 
-A simple REST API in Node.js
+A simple REST API in Express.js
 
 API Endpoints
 
